@@ -1,0 +1,22 @@
+<div class="overlay">
+  <div class="content">
+    <form class="form" novalidate [formGroup]="lessonForm" (ngSubmit)="submit(lessonForm)">
+      <div class="form-control">
+        <label for="topic">Topic</label>
+        <input type="text" id="topic" formControlName="topic" [class.alert]="lessonForm.controls.topic.touched && lessonForm.controls.topic.hasError('required')">
+      </div>
+      <div class="form-control">
+        <label for="date">Date</label>
+        <input type="date" id="date" formControlName="date" [class.alert]="lessonForm.controls.date.touched && lessonForm.controls.date.hasError('required')">
+      </div>
+      <div class="form-control">
+        <label for="lecturer">Lecturer</label>
+        <input type="text" id="lecturer" formControlName="lecturer" [class.alert]="lessonForm.controls.lecturer.touched && lessonForm.controls.lecturer.hasError('required')">
+      </div>
+      <div class="buttons">
+        <button class="create-btn" type="submit">Create</button>
+        <button class="cencel-btn" (click)="close(); $event.stopPropagation(); $event.preventDefault()">Cancel</button>
+      </div>
+    </form>
+  </div>
+</div>

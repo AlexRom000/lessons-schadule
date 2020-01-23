@@ -1,0 +1,58 @@
+<div class="wrapper">
+  <div class="content" *ngIf="lessons.length; else emptyList">
+    <table class="table">
+      <caption class="table-caption">
+        <button (click)="handleOpenCreateDialog()">
+          Create +
+        </button>
+      </caption>
+      <thead class="table-head">
+        <tr class="head-line">
+          <th>#</th>
+          <th>Topic</th>
+          <th>Date</th>
+          <th>Lecturer</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody class="table-body">
+        <tr *ngFor="let lesson of lessons; let i = index">
+          <td>{{i + 1}}</td>
+          <td>
+            <input type="text" class="control" [(ngModel)]="lesson.topic" [disabled]="!getEditedState(lesson.id)">
+          </td>
+          <td>
+            <input type="date" class="control" required [(ngModel)]="lesson.date" [disabled]="!getEditedState(lesson.id)">
+          </td>
+          <td>
+            <input type="text" class="control" [(ngModel)]="lesson.lecturer" [disabled]="!getEditedState(lesson.id)">
+          </td>
+          <td class="buttons-control">
+            <div [ngSwitch]="getEditedState(lesson.id)">
+              <button *ngSwitchCase="false" class="edit-btn" (click)="switchToEditMode(lesson.id)">Edit</button>
+              <button *ngSwitchCase="true" class="save-btn" (click)="saveChanges(lesson)">Save</button>
+            </div>
+            <div>
+              <button class="delete-btn" (click)="deleteLesson(lesson.id)">Delete</button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <ng-container *ngIf="isShowModal">
+    <app-modal (closeModal)="closeModal()" (createLesson)="createLesson($event)"></app-modal>
+  </ng-container>
+</div>
+
+<ng-template #emptyList>
+  <div class="placeholder">
+    <h3 class="placeholder-text">
+      You don't have any lessons yet
+    </h3>
+    <button class="placeholder-button" (click)="handleOpenCreateDialog()">
+      Create first +
+    </button>
+  </div>
+</ng-template>
